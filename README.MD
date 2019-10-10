@@ -32,6 +32,18 @@ For more info, see https://www.arduino.cc/en/Guide/Libraries
     + [Instructions for Fedora](docs/arduino-ide/fedora.md)
     + [Instructions for openSUSE](docs/arduino-ide/opensuse.md)
 
+ # Precautions:
+- Since Twatch uses a special IO as the SD interface, please remove the SD card when downloading the program.
+
+
+# About power consumption:
+- Currently off the screen, turn off WiFi, Bluetooth and other peripherals consume about 4mA (non-deep sleep), turn on the screen power, do not turn on WiFi, Bluetooth and other peripherals around 65mA, please refer to `example -> SimpleWatch` for the specific code.
+
+  ## Off screen power consumption
+  ![](images/off.png)
+
+  ## Open screen power consumption
+  ![](images/on.png)
 
 # Architecture diagram
 ![](images/pins.png)

@@ -29,6 +29,17 @@
     + [Fedora](docs/arduino-ide/fedora.md)
     + [openSUSE](docs/arduino-ide/opensuse.md)
   
+# 注意事项:
+- 由于Twatch使用了特殊IO作为SD接口，下载程序时候请移除SD卡
+
+# 关于功耗:
+- 目前关闭屏幕，关闭WiFi,蓝牙和其他外围设备功耗在4mA左右（非深度睡眠），打开屏功耗,不开启WiFi,蓝牙和其他外围设备在65mA左右，具体代码请参考`example -> SimpleWatch`
+
+  ## Off screen power consumption
+  ![](../images/off.png)
+
+  ## Open screen power consumption
+  ![](../images/on.png)
 
 # 架构图
 ![](../images/pins.png)

@@ -33,6 +33,28 @@ public:
         eTFT->init();
     }
 
+    void powerOff()
+    {
+        power->setPowerOutPut(0xff, false);
+    }
+
+    void displayOff()
+    {
+        eTFT->writecommand(0x10);
+        touch->enterSleepMode();
+    }
+
+    void displaySleep()
+    {
+        eTFT->writecommand(0x10);
+        touch->enterMonitorMode();
+    }
+
+    void displayWakeup()
+    {
+        eTFT->writecommand(0x11);
+    }
+
     void openBL()
     {
         power->setPowerOutPut(AXP202_LDO2, AXP202_ON);
@@ -86,11 +108,25 @@ public:
         indev_drv.read_cb = touchpad_read;
         lv_indev_drv_register(&indev_drv);
         tickTicker = new Ticker();
+        startLvglTick();
+    }
+
+    void startLvglTick()
+    {
         tickTicker->attach_ms(5, []() {
             lv_tick_inc(5);
         });
     }
+    void stopLvglTick()
+    {
+        tickTicker->detach();
+    }
 
+    void rtcAttachInterrupt(void (*rtc_cb)(void))
+    {
+        pinMode(RTC_INT, INPUT_PULLUP); //need change to rtc_pin
+        attachInterrupt(RTC_INT, rtc_cb, FALLING);
+    }
 
     static TTGOClass *getWatch()
     {
@@ -140,7 +176,7 @@ public:
         return false;
     }
 
-    void enbaleLDO4()
+    void enableLDO4()
     {
         power->setLDO4Voltage(AXP202_LDO4_1800MV);
         power->setPowerOutPut(AXP202_LDO4, AXP202_ON);
