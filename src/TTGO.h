@@ -144,6 +144,14 @@ public:
         motor->begin();
     }
 
+    void buzzer_begin(uint8_t pin = SPEAKER_PIN)
+    {
+        if (buzzer == nullptr) {
+            buzzer = new Buzzer(pin);
+        }
+        buzzer->begin();
+    }
+
     void nfc_begin()
     {
         if (nfc == nullptr) {
@@ -223,7 +231,7 @@ public:
     void gameControlBuzzer()
     {
         if (buzzer == nullptr)return;
-        buzzer->onec();
+        buzzer->once();
     }
 
     void gameControlHandler()

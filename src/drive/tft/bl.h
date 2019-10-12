@@ -90,7 +90,7 @@ public:
         ledcWrite(_channel, level);
     };
 
-    void onec()
+    void once()
     {
         ledcWriteTone(_channel, _freq);
         tick->once_ms(200, []() {
@@ -134,13 +134,21 @@ public:
         ledcWrite(_channel, level);
     };
 
-    void onec()
+    void once()
     {
         ledcWriteTone(_channel, _freq);
         tick->once_ms(200, []() {
             ledcWriteTone(2, 0);
         });
     };
+
+    void beep(int frequency = 1000) 
+    {
+        ledcWriteTone(_channel, frequency);
+        tick->once_ms(200, []() {
+            ledcWriteTone(2, 0); //switch off again
+        });
+    }
 
 private:
     int _pin;

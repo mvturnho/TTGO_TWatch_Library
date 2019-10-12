@@ -37,6 +37,7 @@
 #define BMA423_INT2         0
 
 #define MOTOR_PIN           33
+#define SPEAKER_PIN         25
 
 //!  PDM MIC BOARD
 #define MIC_DATA            34
