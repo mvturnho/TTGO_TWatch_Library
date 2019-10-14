@@ -152,6 +152,15 @@ public:
         buzzer->begin();
     }
 
+        void buzzer_active(bool state) {
+        enableLDO3(state); // disable power to buzzer amp
+        buzzer->set_active(state); //dizbale pwm
+    }
+
+    bool is_buzzer_active() {
+        return buzzer->is_active();
+    }
+
     void nfc_begin()
     {
         if (nfc == nullptr) {

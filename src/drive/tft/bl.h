@@ -150,10 +150,21 @@ public:
         });
     }
 
+    void set_active(bool active_state)
+    {
+        ledcWriteTone(_channel, 0); //switch off again
+        this->_active_state = active_state;
+    }
+
+    bool is_active() {
+        return _active_state;
+    }
+
 private:
     int _pin;
     uint8_t _channel;
     double _freq;
+    bool _active_state = false;
     Ticker *tick;
 };
 
