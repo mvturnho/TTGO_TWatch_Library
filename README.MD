@@ -48,6 +48,9 @@ For more info, see https://www.arduino.cc/en/Guide/Libraries
 # Architecture diagram
 ![](images/pins.png)
 
+# 3D Shell
+![](https://github.com/Xinyuan-LilyGO/TTGO_TWatch_Library/blob/master/images/shell.png)
+
 # Core Board Pinout
 **TFT**
 

@@ -135,10 +135,10 @@ static inline uint8_t i2c_recv(void)
 */
 /**************************************************************************/
 Adafruit_PN532::Adafruit_PN532(uint8_t clk, uint8_t miso, uint8_t mosi, uint8_t ss):
-    _clk(clk),
-    _miso(miso),
-    _mosi(mosi),
     _ss(ss),
+    _clk(clk),
+    _mosi(mosi),
+    _miso(miso),
     _irq(0),
     _reset(0),
     _usingSPI(true),
@@ -159,10 +159,10 @@ Adafruit_PN532::Adafruit_PN532(uint8_t clk, uint8_t miso, uint8_t mosi, uint8_t 
 */
 /**************************************************************************/
 Adafruit_PN532::Adafruit_PN532(uint8_t irq, uint8_t reset):
-    _clk(0),
-    _miso(0),
-    _mosi(0),
     _ss(0),
+    _clk(0),
+    _mosi(0),
+    _miso(0),
     _irq(irq),
     _reset(reset),
     _usingSPI(false),
@@ -180,10 +180,10 @@ Adafruit_PN532::Adafruit_PN532(uint8_t irq, uint8_t reset):
 */
 /**************************************************************************/
 Adafruit_PN532::Adafruit_PN532(uint8_t ss):
-    _clk(0),
-    _miso(0),
-    _mosi(0),
     _ss(ss),
+    _clk(0),
+    _mosi(0),
+    _miso(0),
     _irq(0),
     _reset(0),
     _usingSPI(true),
@@ -229,10 +229,11 @@ void Adafruit_PN532::begin()
     } else {
         // Reset the PN532
         digitalWrite(_reset, HIGH);
+        delay(400);
         digitalWrite(_reset, LOW);
         delay(400);
         digitalWrite(_reset, HIGH);
-        delay(10);  // Small delay required before taking other actions after reset.
+        delay(400);  // Small delay required before taking other actions after reset.
         // See timing diagram on page 209 of the datasheet, section 12.23.
     }
 }
@@ -350,7 +351,6 @@ uint32_t Adafruit_PN532::getFirmwareVersion(void)
 // default timeout of one second
 bool Adafruit_PN532::sendCommandCheckAck(uint8_t *cmd, uint8_t cmdlen, uint16_t timeout)
 {
-    uint16_t timer = 0;
 
     // write the command
     writecommand(cmd, cmdlen);
@@ -407,8 +407,6 @@ bool Adafruit_PN532::sendCommandCheckAck(uint8_t *cmd, uint8_t cmdlen, uint16_t 
 /**************************************************************************/
 bool Adafruit_PN532::writeGPIO(uint8_t pinstate)
 {
-    uint8_t errorbit;
-
     // Make sure pinstate does not try to toggle P32 or P34
     pinstate |= (1 << PN532_GPIO_P32) | (1 << PN532_GPIO_P34);
 
@@ -844,7 +842,6 @@ bool Adafruit_PN532::mifareclassic_IsTrailerBlock (uint32_t uiBlock)
 /**************************************************************************/
 uint8_t Adafruit_PN532::mifareclassic_AuthenticateBlock (uint8_t *uid, uint8_t uidLen, uint32_t blockNumber, uint8_t keyNumber, uint8_t *keyData)
 {
-    uint8_t len;
     uint8_t i;
 
     // Hang on to the key and uid data
@@ -1571,7 +1568,6 @@ void Adafruit_PN532::readdata(uint8_t *buff, uint8_t n)
 #endif
     } else {
         // I2C write.
-        uint16_t timer = 0;
         delay(2);
         uint8_t data[n + 2];
         memset(data, 0, n + 2);
